@@ -1,9 +1,10 @@
-package com.example.AOPMapExercise.entities;
+package com.example.AOPMapExercise.model;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,26 +15,24 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
-    @Column
-    private int id;
+    @Column(name = "id", unique = true, nullable = false)
+    private String id;
 
     @Basic
-    @Column
+    @Column(name = "email", nullable = false, length = 250)
+    @Email
     private String email;
 
-    @Basic
-    @Column
-    private String password;
 
     @Basic
-    @Column
+    @Column(name = "fullname", nullable = false, length = 250)
     private String name;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "user_news",
+            name = "user_toDo",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "news_id")
+            inverseJoinColumns = @JoinColumn(name = "todo_id")
     )
-    private Set<News> news = new HashSet<>();
+    private Set<ToDo> toDos = new HashSet<>();
 }

@@ -6,4 +6,151 @@ info:
 servers:
   - url: http://localhost:8081/
 paths:
-  
+  /postToDoInfo:
+    post:
+      tags:
+        - createtodo
+      summary: Create a todo task
+      operationId: postTodoInfo
+      requestBody:
+        description: Create a Todo task for system
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/CreateToDoRequest'
+            examples:
+              ToDo1:
+                value:
+                  authorId: "1"
+                  title: "Meet with Doctor Strange"
+                  Content: "I have a meeting with Doctor Strange at 5pm"
+                  priority: "Medium"
+                  status: "true"
+      responses:
+        '200':
+          description: Create Todo successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectCreationSuccessResponse'
+  /postNewUsers:
+    post:
+      tags:
+        - createNewUser
+      summary: This API is used for creating a new user in the system
+      operationId: postUserInfo
+      requestBody:
+        description: Create a new user for system
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/createUserRequest'
+            examples:
+              User1:
+                value:
+                  email: "admin@gmail.com"
+                  fullName: "Admin"
+      responses:
+        '200':
+          description: Create Todo successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectCreationSuccessResponse'
+              examples:
+                SuccessfulMessage:
+                  value:
+                    responseCode: 200
+                    message: "Successfully create a new user information"
+
+  /getUserList:
+    get:
+      tags:
+        - getUserList
+      summary: Get the list of user in this system
+      operationId: GetListUser
+      responses:
+        '200':
+          description: Get the list of user in system
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserListResponse'
+
+components:
+  schemas:
+    CreateToDoRequest:
+      type: object
+      required:
+        - authorId
+        - title
+        - content
+        - priority
+        - status
+      properties:
+        authorId:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        priority:
+          type: string
+          enum:
+            - Low
+            - Medium
+            - High
+        status:
+          type: boolean
+          default: false
+    createUserRequest:
+      type: object
+      required:
+        - email
+        - fullName
+      properties:
+        email:
+          type: string
+          pattern: '\S+@\S+\.\S+'
+        fullName:
+          type: string
+    UserListResponse:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserResponseModel'
+    UserResponseModel:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+
+    ObjectCreationSuccessResponse:
+      type: object
+      properties:
+        responseCode:
+          type: integer
+        message:
+          type: string
+    ObjectUpdateSuccessResponse:
+      type: object
+      properties:
+        responseCode:
+          type: integer
+        message:
+          type: string
+  examples:
+    InternalServerError:
+      value:
+        errorCode: 1500
+        faults:
+          -:
+          userMessage: There're some error when processing this request. Please retry again or contact the site administrator for supporting
+          internalMessage: Internal server error
+          code: 1500
+          errorCode: 1500
+
