@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/exercise
+    username: root
+    password: admin123
+    tomcat:
+      max-idle: 20
+      max-active: 50
+      max-wait: 20000
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+
+server:
+  port: 8081

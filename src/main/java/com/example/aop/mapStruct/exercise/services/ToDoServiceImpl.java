@@ -1,17 +1,19 @@
-package com.example.AOPMapExercise.Service;
+package com.example.aop.mapStruct.exercise.services;
 
 
-import com.example.AOPMapExercise.Mapper.MapStructMapper;
-import com.example.AOPMapExercise.Repository.ToDoRepository;
-import com.example.AOPMapExercise.api.model.CreateToDoRequest;
-import com.example.AOPMapExercise.model.ToDo;
+import com.example.aop.mapStruct.exercise.mappers.MapStructMapper;
+import com.example.aop.mapStruct.exercise.repository.ToDoRepository;
+import com.example.aop.mapStruct.exercise.api.model.CreateToDoRequest;
+import com.example.aop.mapStruct.exercise.models.ToDo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
 public class ToDoServiceImpl implements ToDoService {
 
+    @Autowired
     public ToDoRepository toDoRepository;
 
     @Override

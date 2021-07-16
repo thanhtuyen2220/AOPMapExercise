@@ -1,4 +1,4 @@
-package com.example.AOPMapExercise;
+package com.example.aop.mapStruct.exercise;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

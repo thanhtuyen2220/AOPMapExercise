@@ -1,11 +1,8 @@
-package com.example.AOPMapExercise.Controller;
+package com.example.aop.mapStruct.exercise.controllers;
 
-import com.example.AOPMapExercise.Service.UserService;
-import com.example.AOPMapExercise.api.model.CreateToDoRequest;
-import com.example.AOPMapExercise.api.model.CreateUserRequest;
-import com.example.AOPMapExercise.api.model.ObjectCreationSuccessResponse;
-import com.example.AOPMapExercise.model.ToDo;
-import com.example.AOPMapExercise.model.User;
+import com.example.aop.mapStruct.exercise.services.UserService;
+import com.example.aop.mapStruct.exercise.api.model.CreateUserRequest;
+import com.example.aop.mapStruct.exercise.api.model.ObjectCreationSuccessResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Validate;

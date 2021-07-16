@@ -1,16 +1,19 @@
-package com.example.AOPMapExercise.model;
+package com.example.aop.mapStruct.exercise.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "ToDo")
+@Table(name = "todo")
+@Data
 public class ToDo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
@@ -33,9 +36,9 @@ public class ToDo {
     @Column(name = "status",nullable = false,columnDefinition = "false")
     private Boolean status;
 
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            mappedBy = "todos"
-    )
-    private Set<User> authors = new HashSet<>();
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn (name="author_id",referencedColumnName="id",nullable=false,unique=true)
+    private User user;
 }
