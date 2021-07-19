@@ -2,6 +2,7 @@ package com.example.aop.mapStruct.exercise.services;
 
 
 import com.example.aop.mapStruct.exercise.api.model.*;
+import com.example.aop.mapStruct.exercise.exceptions.BadRequestException;
 import com.example.aop.mapStruct.exercise.helper.TaskListOrder;
 import com.example.aop.mapStruct.exercise.mappers.MapStructMapper;
 import com.example.aop.mapStruct.exercise.models.User;
@@ -30,14 +31,15 @@ public class ToDoServiceImpl implements ToDoService {
     public ToDo createTask(CreateToDoRequest toDoRequest) {
         //log.info("\nRequest"+toDoRequest.toString());
         ToDo toDoInformation = MapStructMapper.INSTANCE.toDoInformation(toDoRequest);
-        ToDo postToDoInformation = toDoRepository.save(toDoInformation);
-        return postToDoInformation;
+            return toDoRepository.save(toDoInformation);
+
     }
 
     @Override
     public TaskListResponse getTaskList(String order, String sortField, int page) {
         if(page < 0){
             //TODO 5: Add exception after configuring
+            throw new BadRequestException("Invalid data.Make sure page number is greater than 0");
         }
         String orderByField = order.toUpperCase();
         Pageable requestedPage = TaskListOrder.valueOf(orderByField)

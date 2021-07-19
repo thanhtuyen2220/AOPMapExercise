@@ -34,6 +34,9 @@ public class UserController {
 
     @RequestMapping(value = GET_USER_INFO_URI, method = RequestMethod.GET)
     public ResponseEntity<UserListResponse> getUserInfo(@RequestParam final String order, String field,Integer page){
+        Validate.notBlank(order,"order field must not be empty");
+        Validate.notBlank(field, "sort field must not be empty");
+        Validate.notBlank(page.toString(),"page number must not be empty");
         UserListResponse userList = userService.getUserList(order,field,page);
         return ResponseEntity.ok(userList);
     }

@@ -165,6 +165,7 @@ components:
       properties:
         email:
           type: string
+          format: email
           pattern: '\S+@\S+\.\S+'
         fullName:
           type: string

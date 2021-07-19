@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 @Aspect
 public class ActionAspect {
-    private static Logger logger = LoggerFactory.getLogger(ActionAspect.class);
+    private final static Logger logger = LoggerFactory.getLogger(ActionAspect.class);
 
     @Around("execution(* com.example.aop.mapStruct.exercise.services..*.*(..))")
     public Object logMethod(ProceedingJoinPoint joinPoint) throws Throwable{

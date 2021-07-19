@@ -1,5 +1,6 @@
 package com.example.aop.mapStruct.exercise.helper;
 
+import com.example.aop.mapStruct.exercise.exceptions.BadRequestException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -29,9 +30,7 @@ public enum TaskListOrder {
     private static String validateSortField(String sortField) {
         List<String> validFields = Arrays.asList("authorName", "title","content","priority","status");
         if (!validFields.contains(sortField)) {
-            // TODO 4: add exception after configuring
-            //throw new BadRequestException("invalid sort field");
-
+            throw new BadRequestException("Invalid sort field.Please try again");
         }
         String result = sortField;
         return result;

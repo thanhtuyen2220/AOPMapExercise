@@ -2,7 +2,6 @@ package com.example.aop.mapStruct.exercise.controllers;
 
 import com.example.aop.mapStruct.exercise.api.model.CreateToDoRequest;
 import com.example.aop.mapStruct.exercise.models.ToDo;
-import com.example.aop.mapStruct.exercise.models.User;
 import com.example.aop.mapStruct.exercise.services.ToDoService;
 import io.restassured.RestAssured;
 import org.apache.commons.lang3.RandomStringUtils;

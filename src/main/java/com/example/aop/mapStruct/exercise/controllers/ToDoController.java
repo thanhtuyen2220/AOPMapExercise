@@ -43,6 +43,9 @@ public class ToDoController {
 
     @RequestMapping(value = GET_TODO_INFO_URI, method = RequestMethod.GET)
     public ResponseEntity<TaskListResponse> getToDoInfo(@RequestParam final String order, String field, Integer page){
+        Validate.notBlank(order,"order field must not be empty");
+        Validate.notBlank(field, "sort field must not be empty");
+        Validate.notBlank(page.toString(),"page number must not be empty");
         TaskListResponse taskList = toDoService.getTaskList(order,field,page);
         return ResponseEntity.ok(taskList);
     }
