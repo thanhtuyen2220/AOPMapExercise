@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
@@ -33,8 +34,8 @@ public class ToDo {
     private String priority;
 
     @Basic
-    @Column(name = "status",nullable = false,columnDefinition = "false")
-    private Boolean status;
+    @Column(name = "status",nullable = false)
+    private String status;
 
     @Basic
     @Column(name= "author_id",nullable = false,length = 255)

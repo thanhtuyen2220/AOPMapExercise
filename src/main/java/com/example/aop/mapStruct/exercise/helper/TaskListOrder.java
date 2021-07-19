@@ -7,7 +7,7 @@ import org.springframework.data.domain.Sort;
 import java.util.Arrays;
 import java.util.List;
 
-public enum UserListOrder {
+public enum TaskListOrder {
     ASC {
         @Override
         public Pageable apply(int page, int pageSize, String sortField) {
@@ -27,9 +27,9 @@ public enum UserListOrder {
 
     public abstract Pageable apply(int page, int pageSize, String sortField);
     private static String validateSortField(String sortField) {
-        List<String> validFields = Arrays.asList("email", "fullName");
+        List<String> validFields = Arrays.asList("authorName", "title","content","priority","status");
         if (!validFields.contains(sortField)) {
-            // TODO 1: add exception after configuring
+            // TODO 4: add exception after configuring
             //throw new BadRequestException("invalid sort field");
 
         }

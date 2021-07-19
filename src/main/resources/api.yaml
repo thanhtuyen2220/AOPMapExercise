@@ -23,9 +23,9 @@ paths:
                 value:
                   authorId: "1"
                   title: "Meet with Doctor Strange"
-                  Content: "I have a meeting with Doctor Strange at 5pm"
+                  content: "I have a meeting with Doctor Strange at 5pm"
                   priority: "Medium"
-                  status: "true"
+                  status: "Done"
       responses:
         '200':
           description: Create Todo successfully
@@ -96,6 +96,39 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserListResponse'
 
+  /getTaskList:
+    get:
+      tags:
+        - getTaskList
+      summary: Get the list of task in this system
+      operationId: GetTaskList
+      parameters:
+        - in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+            default: desc
+        - in: query
+          name: field
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: page number, start at page 0, each page will return 10 item
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: Get the list of task in system
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskListResponse'
+
 components:
   schemas:
     CreateToDoRequest:
@@ -120,8 +153,10 @@ components:
             - Medium
             - High
         status:
-          type: boolean
-          default: false
+          type: string
+          enum:
+            - Done
+            - NotDone
     createUserRequest:
       type: object
       required:
@@ -147,11 +182,35 @@ components:
     UserResponseModel:
       type: object
       properties:
-        fullName:
+        name:
           type: string
         email:
           type: string
 
+    TaskListResponse:
+      type: object
+      properties:
+        currentPage:
+          type: integer
+        totalPage:
+          type: integer
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskResponseModel'
+    TaskResponseModel:
+      type: object
+      properties:
+        authorName:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        priority:
+          type: string
+        status:
+          type: string
     ObjectCreationSuccessResponse:
       type: object
       properties:

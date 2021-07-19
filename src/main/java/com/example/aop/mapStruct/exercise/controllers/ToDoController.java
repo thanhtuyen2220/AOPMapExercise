@@ -1,5 +1,7 @@
 package com.example.aop.mapStruct.exercise.controllers;
 
+import com.example.aop.mapStruct.exercise.api.model.TaskListResponse;
+import com.example.aop.mapStruct.exercise.api.model.UserListResponse;
 import com.example.aop.mapStruct.exercise.models.ToDo;
 import com.example.aop.mapStruct.exercise.models.User;
 import com.example.aop.mapStruct.exercise.services.ToDoService;
@@ -37,6 +39,12 @@ public class ToDoController {
         result.setResponseCode(HttpStatus.CREATED.value());
         result.setMessage("Successfully create a new ToDoInfo");
         return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = GET_TODO_INFO_URI, method = RequestMethod.GET)
+    public ResponseEntity<TaskListResponse> getToDoInfo(@RequestParam final String order, String field, Integer page){
+        TaskListResponse taskList = toDoService.getTaskList(order,field,page);
+        return ResponseEntity.ok(taskList);
     }
 
 

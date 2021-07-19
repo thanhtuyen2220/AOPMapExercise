@@ -1,13 +1,12 @@
 package com.example.aop.mapStruct.exercise.mappers;
 import com.example.aop.mapStruct.exercise.api.model.CreateToDoRequest;
 import com.example.aop.mapStruct.exercise.api.model.CreateUserRequest;
+import com.example.aop.mapStruct.exercise.api.model.TaskResponseModel;
 import com.example.aop.mapStruct.exercise.api.model.UserResponseModel;
 import com.example.aop.mapStruct.exercise.models.ToDo;
 import com.example.aop.mapStruct.exercise.models.User;
-import jdk.jfr.Name;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
@@ -23,11 +22,10 @@ public interface MapStructMapper {
 
     UserResponseModel userRespnseInfo(final User user);
 
+    TaskResponseModel taskResponseInfo(final ToDo toDo);
+
     default String mappingPriorityEnum(CreateToDoRequest.PriorityEnum priorityEnum){
         return priorityEnum.toString();
     }
-
-
-
 
 }
