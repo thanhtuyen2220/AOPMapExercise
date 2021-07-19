@@ -1,8 +1,11 @@
 package com.example.aop.mapStruct.exercise.controllers;
 
+import com.example.aop.mapStruct.exercise.models.ToDo;
+import com.example.aop.mapStruct.exercise.models.User;
 import com.example.aop.mapStruct.exercise.services.ToDoService;
 import com.example.aop.mapStruct.exercise.api.model.CreateToDoRequest;
 import com.example.aop.mapStruct.exercise.api.model.ObjectCreationSuccessResponse;
+import com.example.aop.mapStruct.exercise.services.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,11 +21,9 @@ import org.apache.commons.lang3.Validate;
 public class ToDoController {
     public static final String POST_TODO_INFO_URI = "/postTodoInfo";
 
-
+    public static final String GET_TODO_INFO_URI = "/getTodoInfo";
 
     public ToDoService toDoService;
-
-
 
     @RequestMapping(value = POST_TODO_INFO_URI, method = RequestMethod.POST)
     public ResponseEntity<ObjectCreationSuccessResponse> postTodoInfo(@RequestBody final CreateToDoRequest request) {
@@ -37,4 +38,6 @@ public class ToDoController {
         result.setMessage("Successfully create a new ToDoInfo");
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
+
+
 }

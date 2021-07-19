@@ -1,6 +1,7 @@
 package com.example.aop.mapStruct.exercise.mappers;
 import com.example.aop.mapStruct.exercise.api.model.CreateToDoRequest;
 import com.example.aop.mapStruct.exercise.api.model.CreateUserRequest;
+import com.example.aop.mapStruct.exercise.api.model.UserResponseModel;
 import com.example.aop.mapStruct.exercise.models.ToDo;
 import com.example.aop.mapStruct.exercise.models.User;
 import jdk.jfr.Name;
@@ -15,15 +16,18 @@ public interface MapStructMapper {
 
     @Mapping(target = "id",ignore = true)
     @Mapping(target = "priority", source = "request.priority" )
-    @Mapping(target = "user" ,source = "request.authorId")
     ToDo toDoInformation(final CreateToDoRequest request);
 
     @Mapping(target = "id",ignore = true)
     User userInformation(final CreateUserRequest userRequest);
 
+    UserResponseModel userRespnseInfo(final User user);
+
     default String mappingPriorityEnum(CreateToDoRequest.PriorityEnum priorityEnum){
         return priorityEnum.toString();
     }
+
+
 
 
 }

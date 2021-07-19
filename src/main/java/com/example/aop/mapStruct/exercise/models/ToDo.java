@@ -36,9 +36,7 @@ public class ToDo {
     @Column(name = "status",nullable = false,columnDefinition = "false")
     private Boolean status;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn (name="author_id",referencedColumnName="id",nullable=false,unique=true)
-    private User user;
+    @Basic
+    @Column(name= "author_id",nullable = false,length = 255)
+    private String authorId;
 }

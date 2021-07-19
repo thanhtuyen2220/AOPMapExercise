@@ -29,8 +29,4 @@ public class User {
     @Column(name = "fullname", nullable = false, length = 250)
     private String fullName;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-    private List<ToDo> toDos;
 }

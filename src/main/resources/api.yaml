@@ -69,6 +69,25 @@ paths:
         - getUserList
       summary: Get the list of user in this system
       operationId: GetListUser
+      parameters:
+        - in: query
+          name: order
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+            default: desc
+        - in: query
+          name: field
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: page number, start at page 0, each page will return 10 item
+          schema:
+            type: integer
+            default: 0
       responses:
         '200':
           description: Get the list of user in system
@@ -117,6 +136,10 @@ components:
     UserListResponse:
       type: object
       properties:
+        currentPage:
+          type: integer
+        totalPage:
+          type: integer
         users:
           type: array
           items:
@@ -124,7 +147,7 @@ components:
     UserResponseModel:
       type: object
       properties:
-        name:
+        fullName:
           type: string
         email:
           type: string

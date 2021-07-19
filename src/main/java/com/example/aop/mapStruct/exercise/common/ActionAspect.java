@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 public class ActionAspect {
     private static Logger logger = LoggerFactory.getLogger(ActionAspect.class);
 
-    @Around("execution(* com.example.AOPMapExercise.Service..*.*(..))")
+    @Around("execution(* com.example.aop.mapStruct.exercise.services..*.*(..))")
     public Object logMethod(ProceedingJoinPoint joinPoint) throws Throwable{
         String methodName = joinPoint.getSignature().getName();
         Object result = null;
