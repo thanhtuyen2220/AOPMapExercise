@@ -3,6 +3,7 @@ package com.example.aop.mapStruct.exercise.services;
 
 import com.example.aop.mapStruct.exercise.api.model.*;
 import com.example.aop.mapStruct.exercise.exceptions.BadRequestException;
+import com.example.aop.mapStruct.exercise.exceptions.NotFoundDataException;
 import com.example.aop.mapStruct.exercise.helper.TaskListOrder;
 import com.example.aop.mapStruct.exercise.mappers.MapStructMapper;
 import com.example.aop.mapStruct.exercise.models.User;
@@ -31,7 +32,10 @@ public class ToDoServiceImpl implements ToDoService {
     public ToDo createTask(CreateToDoRequest toDoRequest) {
         //log.info("\nRequest"+toDoRequest.toString());
         ToDo toDoInformation = MapStructMapper.INSTANCE.toDoInformation(toDoRequest);
-            return toDoRepository.save(toDoInformation);
+        if(userRepository.findUserById(toDoRequest.getAuthorId()) == null){
+            throw new NotFoundDataException("This user is not existed in database.Please try again");
+        }
+        return toDoRepository.save(toDoInformation);
 
     }
 

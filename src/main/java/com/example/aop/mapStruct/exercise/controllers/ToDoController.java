@@ -1,13 +1,9 @@
 package com.example.aop.mapStruct.exercise.controllers;
 
 import com.example.aop.mapStruct.exercise.api.model.TaskListResponse;
-import com.example.aop.mapStruct.exercise.api.model.UserListResponse;
-import com.example.aop.mapStruct.exercise.models.ToDo;
-import com.example.aop.mapStruct.exercise.models.User;
 import com.example.aop.mapStruct.exercise.services.ToDoService;
 import com.example.aop.mapStruct.exercise.api.model.CreateToDoRequest;
 import com.example.aop.mapStruct.exercise.api.model.ObjectCreationSuccessResponse;
-import com.example.aop.mapStruct.exercise.services.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

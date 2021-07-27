@@ -1,7 +1,6 @@
 package com.example.aop.mapStruct.exercise.controllers;
 
 import com.example.aop.mapStruct.exercise.api.model.CreateToDoRequest;
-import com.example.aop.mapStruct.exercise.models.ToDo;
 import com.example.aop.mapStruct.exercise.services.ToDoService;
 import io.restassured.RestAssured;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -26,13 +25,13 @@ public class ToDoControllerTest {
 
 
     @Test
-    public void createTodo(){
-        ToDo toDo = new ToDo();
+    public void createTodo_getSuccessfully(){
+        CreateToDoRequest toDo = new CreateToDoRequest();
         toDo.setContent(RandomStringUtils.random(254));
         toDo.setAuthorId("1");
-        toDo.setPriority(CreateToDoRequest.PriorityEnum.MEDIUM.toString());
+        toDo.setPriority(CreateToDoRequest.PriorityEnum.MEDIUM);
         toDo.setTitle(RandomStringUtils.random(25));
-        toDo.setStatus(CreateToDoRequest.StatusEnum.DONE.toString());
+        toDo.setStatus(CreateToDoRequest.StatusEnum.DONE);
         RestAssured
                 .given()
                 .body(toDo)
@@ -49,6 +48,52 @@ public class ToDoControllerTest {
                 .statusCode(201);
     }
 
+    @Test
+    public void testCreateTask_givenMissingData_shouldGetException(){
+        CreateToDoRequest toDo = new CreateToDoRequest();
+        toDo.setContent(RandomStringUtils.random(254));
+        toDo.setAuthorId(null);
+        toDo.setPriority(CreateToDoRequest.PriorityEnum.MEDIUM);
+        toDo.setTitle(RandomStringUtils.random(25));
+        toDo.setStatus(CreateToDoRequest.StatusEnum.DONE);
+        RestAssured
+                .given()
+                .body(toDo)
+                .port(port)
+                .urlEncodingEnabled(false)
+                .header("Content-Type", "application/json")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .post("/ToDo/postTodoInfo")
+                .then()
+                .log()
+                .all()
+                .assertThat()
+                .statusCode(500);
+    }
+    @Test
+    public void testCreateTask_givenWrongData_shouldBadRequestException(){
+        CreateToDoRequest toDo = new CreateToDoRequest();
+        toDo.setContent(RandomStringUtils.random(254));
+        toDo.setAuthorId("3");
+        toDo.setPriority(CreateToDoRequest.PriorityEnum.MEDIUM);
+        toDo.setTitle(RandomStringUtils.random(25));
+        toDo.setStatus(CreateToDoRequest.StatusEnum.DONE);
+        RestAssured
+                .given()
+                .body(toDo)
+                .port(port)
+                .urlEncodingEnabled(false)
+                .header("Content-Type", "application/json")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .post("/ToDo/postTodoInfo")
+                .then()
+                .log()
+                .all()
+                .assertThat()
+                .statusCode(404);
+    }
     @Test
     public void testGetToDoList(){
         RestAssured
