@@ -2,7 +2,9 @@ package com.example.aop.mapStruct.exercise.services;
 
 import com.example.aop.mapStruct.exercise.api.model.UserListResponse;
 import com.example.aop.mapStruct.exercise.api.model.UserResponseModel;
+import com.example.aop.mapStruct.exercise.exceptions.AlreadyAccountExistedException;
 import com.example.aop.mapStruct.exercise.exceptions.BadRequestException;
+import com.example.aop.mapStruct.exercise.exceptions.InvalidDataException;
 import com.example.aop.mapStruct.exercise.helper.UserListOrder;
 import com.example.aop.mapStruct.exercise.helper.ValidationHelper;
 import com.example.aop.mapStruct.exercise.mappers.MapStructMapper;
@@ -28,21 +30,23 @@ public class UserServiceImpl implements UserService{
     public User createNewUser(CreateUserRequest request) {
         if(request != null){
             if(ValidationHelper.validate(request.getEmail()) || request.getFullName()!= null) {
-                User user = MapStructMapper.INSTANCE.userInformation(request);
-                return userRepository.save(user);
+                // TODO 6: check the request is existed in db or not?
+                if(userRepository.findUserByEmail(request.getEmail())== null) {
+                    User user = MapStructMapper.INSTANCE.userInformation(request);
+                    return userRepository.save(user);
+                }
+                else{
+                    throw new AlreadyAccountExistedException("This account is existed,please try again.");
+                }
             }
             else {
-                throw new BadRequestException("Not valid data");
+                throw new InvalidDataException("Not valid data.Please check again");
             }
         }
-        else throw new BadRequestException("Not valid data");
+        else throw new BadRequestException("Not valid data.Field must not be null");
 
     }
 
-    @Override
-    public User findUserById(String Id) {
-        return  userRepository.findUserById(Id);
-    }
 
     @Override
     public UserListResponse getUserList(String order, String sortField, int page) {

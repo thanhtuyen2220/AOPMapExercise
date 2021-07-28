@@ -6,6 +6,5 @@ import com.example.aop.mapStruct.exercise.models.User;
 
 public interface UserService {
     User createNewUser(CreateUserRequest request);
-    User findUserById(String Id);
     UserListResponse getUserList(String order, String sortField, int page);
 }
