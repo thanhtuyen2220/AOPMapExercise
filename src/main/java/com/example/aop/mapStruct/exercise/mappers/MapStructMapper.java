@@ -20,6 +20,7 @@ public interface MapStructMapper {
     @Mapping(target = "id",ignore = true)
     User userInformation(final CreateUserRequest userRequest);
 
+    @Mapping(target="name",source = "user.fullName")
     UserResponseModel userRespnseInfo(final User user);
 
     TaskResponseModel taskResponseInfo(final ToDo toDo);

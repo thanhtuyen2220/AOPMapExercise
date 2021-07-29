@@ -1,11 +1,15 @@
 package com.example.aop.mapStruct.exercise.controllers;
 
 import com.example.aop.mapStruct.exercise.api.model.*;
+import com.example.aop.mapStruct.exercise.helper.UserListOrder;
+import com.example.aop.mapStruct.exercise.models.User;
 import com.example.aop.mapStruct.exercise.repository.UserRepository;
 import com.example.aop.mapStruct.exercise.services.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Validate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +22,8 @@ public class UserController {
     public static final String POST_USER_INFO_URI = "/postNewUsers";
 
     public static final String GET_USER_INFO_URI = "/getUserList";
+
+    private final static int pageSize = 10;
 
     public UserService userService;
 
@@ -37,7 +43,10 @@ public class UserController {
         Validate.notBlank(order,"order field must not be empty");
         Validate.notBlank(field, "sort field must not be empty");
         Validate.notBlank(page.toString(),"page number must not be empty");
-        UserListResponse userList = userService.getUserList(order,field,page);
+        String orderByField = order.toUpperCase();
+        Pageable requestedPage = UserListOrder.valueOf(orderByField)
+                .apply(page, pageSize,field);
+        UserListResponse userList = userService.getUserList(requestedPage);
         return ResponseEntity.ok(userList);
     }
 }

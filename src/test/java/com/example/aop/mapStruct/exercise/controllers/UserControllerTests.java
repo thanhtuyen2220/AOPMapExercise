@@ -26,8 +26,8 @@ public class UserControllerTests {
     @Test
     public void testCreateUser(){
         User user = new User();
-        user.setEmail(RandomStringUtils.random(25) + "@gmail.com");
-        user.setFullName(RandomStringUtils.random(25));
+        user.setEmail("admin123@gmail.com");
+        user.setFullName("admin123");
         RestAssured
                 .given()
                 .body(user)

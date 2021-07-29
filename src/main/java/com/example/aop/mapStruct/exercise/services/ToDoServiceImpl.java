@@ -40,14 +40,12 @@ public class ToDoServiceImpl implements ToDoService {
     }
 
     @Override
-    public TaskListResponse getTaskList(String order, String sortField, int page) {
-        if(page < 0){
+    public TaskListResponse getTaskList(Pageable requestedPage) {
+        if(requestedPage.getPageNumber() < 0){
             //TODO 5: Add exception after configuring
             throw new BadRequestException("Invalid data.Make sure page number is greater than 0");
         }
-        String orderByField = order.toUpperCase();
-        Pageable requestedPage = TaskListOrder.valueOf(orderByField)
-                .apply(page, pageSize, sortField);
+
         Page<ToDo> taskList;
         taskList = toDoRepository.findAll(requestedPage);
         return buildTaskList(taskList);

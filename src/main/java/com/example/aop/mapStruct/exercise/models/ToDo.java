@@ -1,10 +1,7 @@
 package com.example.aop.mapStruct.exercise.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;

@@ -5,6 +5,7 @@ import com.example.aop.mapStruct.exercise.api.model.UserResponseModel;
 import com.example.aop.mapStruct.exercise.exceptions.AlreadyAccountExistedException;
 import com.example.aop.mapStruct.exercise.exceptions.BadRequestException;
 import com.example.aop.mapStruct.exercise.exceptions.InvalidDataException;
+import com.example.aop.mapStruct.exercise.exceptions.ResourceNotFoundException;
 import com.example.aop.mapStruct.exercise.helper.UserListOrder;
 import com.example.aop.mapStruct.exercise.helper.ValidationHelper;
 import com.example.aop.mapStruct.exercise.mappers.MapStructMapper;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -27,35 +29,31 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class, noRollbackFor = ResourceNotFoundException.class)
     public User createNewUser(CreateUserRequest request) {
-        if(request != null){
-            if(ValidationHelper.validate(request.getEmail()) || request.getFullName()!= null) {
-                // TODO 6: check the request is existed in db or not?
-                if(userRepository.findUserByEmail(request.getEmail())== null) {
-                    User user = MapStructMapper.INSTANCE.userInformation(request);
-                    return userRepository.save(user);
-                }
-                else{
-                    throw new AlreadyAccountExistedException("This account is existed,please try again.");
-                }
-            }
-            else {
-                throw new InvalidDataException("Not valid data.Please check again");
-            }
+        if(request == null){
+            throw new BadRequestException("Not valid data.Field must not be null");
         }
-        else throw new BadRequestException("Not valid data.Field must not be null");
+        if(!ValidationHelper.validate(request.getEmail()) || request.getEmail() == null ){
+            throw new InvalidDataException("Not valid data.Please check again");
+        }
+
+        if(userRepository.findUserByEmail(request.getEmail())!=null){
+            throw new AlreadyAccountExistedException("This account is existed,please try again.");
+        }
+        else{
+            User user = MapStructMapper.INSTANCE.userInformation(request);
+            return userRepository.save(user);
+        }
 
     }
 
 
     @Override
-    public UserListResponse getUserList(String order, String sortField, int page) {
-        if(page < 0){
+    public UserListResponse getUserList(Pageable requestedPage) {
+        if(requestedPage.getPageNumber() < 0){
             throw new BadRequestException("Not valid data.Make sure page number greater than 0");
         }
-        String orderByField = order.toUpperCase();
-        Pageable requestedPage = UserListOrder.valueOf(orderByField)
-                .apply(page, pageSize, sortField);
         Page<User> userList;
         userList = userRepository.findAll(requestedPage);
         return buildUserList(userList);
