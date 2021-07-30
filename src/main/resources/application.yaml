@@ -24,3 +24,14 @@ feign:
       rickAndMortyClient:
         connectTimeout: 5000
         readTimeout: 5000
+        loggerLevel: full
+        errorDecoder: com.example.aop.mapStruct.exercise.exceptions.CustomErrorDecoder
+        #Error: uncomment it when fix successfully
+        #requestInterceptors: com.example.aop.mapStruct.exercise.openFeign.client.RickAndMortyClient
+  hystrix:
+    enabled: true
+logging:
+  level:
+    com.example.aop.mapStruct.exercise.openFeign.client: debug
+
+
