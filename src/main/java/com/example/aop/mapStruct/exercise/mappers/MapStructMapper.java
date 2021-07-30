@@ -1,13 +1,16 @@
 package com.example.aop.mapStruct.exercise.mappers;
-import com.example.aop.mapStruct.exercise.api.model.CreateToDoRequest;
-import com.example.aop.mapStruct.exercise.api.model.CreateUserRequest;
-import com.example.aop.mapStruct.exercise.api.model.TaskResponseModel;
-import com.example.aop.mapStruct.exercise.api.model.UserResponseModel;
+import com.example.aop.mapStruct.exercise.api.model.*;
 import com.example.aop.mapStruct.exercise.models.ToDo;
 import com.example.aop.mapStruct.exercise.models.User;
+import com.example.aop.mapStruct.exercise.models.openFeign.Characters;
+import com.example.aop.mapStruct.exercise.models.openFeign.Location;
+import com.example.aop.mapStruct.exercise.models.openFeign.Metadata;
+import com.example.aop.mapStruct.exercise.models.openFeign.Origin;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 @Mapper
 public interface MapStructMapper {
@@ -25,8 +28,20 @@ public interface MapStructMapper {
 
     TaskResponseModel taskResponseInfo(final ToDo toDo);
 
+
+    MetadataModel metaDataInfo(final Metadata metadata);
+
+    CharacterModel characterModel(final Character character);
+
+    LocationModel locationModel(final Location location);
+
+    OriginModel originModel (final Origin origin);
+
+    CharacterListResponse characterList(final Characters characters);
+
     default String mappingPriorityEnum(CreateToDoRequest.PriorityEnum priorityEnum){
         return priorityEnum.toString();
     }
+
 
 }
