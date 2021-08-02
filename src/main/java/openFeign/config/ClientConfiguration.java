@@ -27,7 +27,7 @@ public class ClientConfiguration {
 
 
     // Authenticate the request
-
+    @Bean
    public BasicAuthRequestInterceptor basicAuthRequestInterceptor() {
         return new BasicAuthRequestInterceptor("admin", "admin123");
     }

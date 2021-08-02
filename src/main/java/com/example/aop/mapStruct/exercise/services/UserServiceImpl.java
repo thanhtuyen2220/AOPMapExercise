@@ -41,10 +41,8 @@ public class UserServiceImpl implements UserService{
         if(userRepository.findUserByEmail(request.getEmail())!=null){
             throw new AlreadyAccountExistedException("This account is existed,please try again.");
         }
-        else{
-            User user = MapStructMapper.INSTANCE.userInformation(request);
-            return userRepository.save(user);
-        }
+        User user = MapStructMapper.INSTANCE.userInformation(request);
+        return userRepository.save(user);
 
     }
 
